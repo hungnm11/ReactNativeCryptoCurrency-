@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Header from './src/components/common/header';
+import { Provider } from 'react-redux';
+import store from './src/store';
+import { Header, CryptoContainer } from './src/components';
 
 export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Header 
-          headerText="Header 123"
-        />
-        <Text>Open up App.js to start working on your 123!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          <Header
+            headerText="Header 123"
+          />
+          <CryptoContainer />
+        </View>
+      </Provider>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
