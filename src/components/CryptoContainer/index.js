@@ -1,15 +1,38 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { _fetchData } from '../../actions';
+import CoinCard from '../CoinCard';
 
 class CryptoContainer extends Component {
+
+  componentDidMount() {
+    this.props._fetchData();
+  }
+
+  renderCoinCard() {
+    const { crypto } = this.props;
+    return crypto.data.map((coin, index) => {
+      return <CoinCard 
+        key={index}
+        symbol={coin.symbol}
+      />
+    });
+  }
+
   render() {
+    console.log(this.props);
     return (
       <View>
-        <Text>Container</Text>
+        {this.renderCoinCard()}
       </View>
     );
   }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ _fetchData }, dispatch);
 }
 
 const mapStateToProps = (state) => {
@@ -18,4 +41,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(CryptoContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(CryptoContainer);
